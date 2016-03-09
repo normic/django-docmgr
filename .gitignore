@@ -1,0 +1,35 @@
+# Buildouts directories
+/bin
+/develop-eggs
+/eggs
+/parts
+/.installed.cfg
+/downloads
+/lib
+
+# Setuptools/Distributes files
+*.egg-info
+/dist
+/build
+
+# Python precompiles
+*.pyc
+*.pyo
+
+# Komodo project files
+*.kpf
+*.komodoproject
+
+# Django essentials
+secret.txt
+dev*.db
+settings_*.py
+HOSTTYPE.INI
+
+# ignore windows thumbnails
+Thumbs.db
+
+.pylintrc
+wsgi.py
+files/
+
