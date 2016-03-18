@@ -11,13 +11,15 @@ from django.utils.translation import ugettext_lazy as _
 from .app_settings import UPLOAD_PATH
 
 
+def get_upload_path(instance, filename):
+    return os.path.join(
+      UPLOAD_PATH  + time.strftime('%Y'), filename)
+
+
 class Document(models.Model):
     uuid = models.UUIDField(primary_key=True,
                             default=uuid.uuid4, editable=False)
-    docfile = models.FileField(
-        _('File'),
-        upload_to=UPLOAD_PATH + time.strftime('%Y')
-    )
+    docfile = models.FileField(upload_to=get_upload_path)
     description = models.TextField(
         _('Description'),
         help_text=_('An optional description of the file'),
