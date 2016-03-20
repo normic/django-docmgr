@@ -5,13 +5,14 @@ from django.utils.safestring import mark_safe
 
 
 class DocumentPreviewWidget(ClearableFileInput):
+    ''' Basically a ClearableFileInput widget, but:
+        - remove from the template most clutter: we leave only the image,
+          the clear and the <input>
+        - we define a class for the input, so that we can hide it with CSS
+    '''
 
-    class Media(object):
-        css = {
-            'all': ('css/document_preview_widget.css',)
-        }
-        js = ('js/document_preview_widget.js', )  # pylint: disable=C0103
-
+    # The "for" in the <label> allows to open the "open file" dialog by
+    # clicking on the image, no js involved
     template_with_initial = (
         '<label for=%(id_for_label)s> \
         <img id="%(img_id)s" src="' +
@@ -26,9 +27,9 @@ class DocumentPreviewWidget(ClearableFileInput):
         super(DocumentPreviewWidget, self).__init__(attrs)
         self.attrs['class'] = self.INPUT_CLASS
 
+    # Override ClearableFileInput:render
     def render(self, name, value, attrs=None):
         id_for_label = self.id_for_label(attrs.get('id'))
-
         substitutions = {
             'initial_text': self.initial_text,
             'input_text': self.input_text,
@@ -56,6 +57,12 @@ class DocumentPreviewWidget(ClearableFileInput):
                     self.template_with_clear % substitutions
 
         return mark_safe(template % substitutions)
+
+    class Media(object):
+        css = {
+            'all': ('css/document_preview_widget.css',)
+        }
+        js = ('js/document_preview_widget.js', )  # pylint: disable=C0103
 
 
 class DropzoneFileUpload(ClearableFileInput):
