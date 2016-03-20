@@ -66,4 +66,4 @@ Define specific setting:
 DOCMGR_UPLOAD_PATH = '/home/my_file_path/'
 
 If it's not set in current Django project settings, DocMgr will create a
-directory 'files/docmgr/' in your project root.
+directory 'files_docmgr/' in your project root.
