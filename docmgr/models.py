@@ -19,10 +19,13 @@ def get_upload_path(instance, filename):
 class Document(models.Model):
     uuid = models.UUIDField(primary_key=True,
                             default=uuid.uuid4, editable=False)
-    docfile = models.FileField(upload_to=get_upload_path)
+    docfile = models.FileField(
+        upload_to=get_upload_path,
+        help_text=_('Click on fieldname or image to open the upload dialog.')
+    )
     description = models.TextField(
         _('Description'),
-        help_text=_('An optional description of the file'),
+        help_text=_('An optional description of the file.'),
         blank=True
     )
     content_type = models.ForeignKey(ContentType, null=True)
