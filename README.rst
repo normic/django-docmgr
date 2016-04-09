@@ -40,17 +40,16 @@ Setup
 
 2. Run `python manage.py migrate` to create the docmgr models.
 
+3. Use docmgr in your model(s):
 
-To use docmgr in your model(s)::
+    Import GenericRelation and the Document model::
 
-Import GenericRelation and the Document model
+      from django.contrib.contenttypes.fields import GenericRelation
+      from docmgr.models import Document
 
-    from django.contrib.contenttypes.fields import GenericRelation
-    from docmgr.models import Document
+    And add a line like this to your model::
 
-And add a line like this to your model
-
-    documents = GenericRelation(Document, related_query_name='your_model_name)
+      documents = GenericRelation(Document, related_query_name='your_model_name)
 
 
 Admin integration
@@ -61,9 +60,9 @@ TODO
 Settings
 ########
 
-Define specific setting:
+Define specific setting: ::
 
-DOCMGR_UPLOAD_PATH = '/home/my_file_path/'
+  DOCMGR_UPLOAD_PATH = '/home/my_file_path/'
 
 If it's not set in current Django project settings, DocMgr will create a
 directory 'files_docmgr/' in your project root.
