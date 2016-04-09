@@ -42,14 +42,14 @@ Setup
 
 3. Use docmgr in your model(s):
 
-    Import GenericRelation and the Document model::
+   Import GenericRelation and the Document model::
+   
+    from django.contrib.contenttypes.fields import GenericRelation
+    from docmgr.models import Document
 
-      from django.contrib.contenttypes.fields import GenericRelation
-      from docmgr.models import Document
+   And add a line like this to your model::
 
-    And add a line like this to your model::
-
-      documents = GenericRelation(Document, related_query_name='your_model_name)
+    documents = GenericRelation(Document, related_query_name='your_model_name')
 
 
 Admin integration
