@@ -31,7 +31,7 @@ ImageRefresher.prototype.readURL = readURL;
 if (!window.jQuery) {
     console.log('Warn: jQuery is missing, trying to load it myself.')
     var jq = document.createElement('script'); jq.type = 'text/javascript';
-    jq.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'
+    jq.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'
     document.getElementsByTagName('head')[0].appendChild(jq);
 
     window.onload = function() {
