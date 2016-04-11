@@ -3,12 +3,12 @@ from django.conf import settings
 
 from docmgr.models import Document
 
-register = template.Library()       # pylint: disable=C0103
+register = template.Library()
+
 
 # debug: uuid '27851dd9-ec22-4a34-acac-1b3122fd4c6c'
-@register.inclusion_tag('docmgr/_preview.html')
-def preview(uuid_document,
-            maxwidth='180px', maxheight='150px'):
+@register.inclusion_tag('docmgr/_featured_image.html')
+def featured_image(uuid_document, maxwidth='180px', maxheight='150px'):
     try:
         previewdoc = Document.objects.get(pk=uuid_document)
         previewurl = settings.MEDIA_URL + str(previewdoc)
@@ -20,4 +20,3 @@ def preview(uuid_document,
         }
     except Document.DoesNotExist:
         return {}
-
