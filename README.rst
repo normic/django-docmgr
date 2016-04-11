@@ -10,8 +10,8 @@ Features
 * Templatetag for nice preview of a given (image)document
 * Provides DocuemntPreviewWidget which shows a preview of an image instead of
   the normal filelink
-* When deleting a referenced document, the file will be deleted as well
-* Provides an AdminModel
+* When deleting or changing a referenced document, the file will be deleted as well
+* Provides a simple AdminModel
 
 
 Quick start
@@ -40,21 +40,16 @@ Setup
 
 2. Run `python manage.py migrate` to create the docmgr models.
 
-3. Use docmgr in your model(s):
+3. Use docmgr in Admin with your own models::
 
-   Import GenericRelation and the Document model::
-   
-    from django.contrib.contenttypes.fields import GenericRelation
     from docmgr.models import Document
+    from docmgr.admin import DocumentAdmin, DocumentStackedInline, DocumentTabularInline
 
-   And add a line like this to your model::
+    class MyDocumentInline(DocumentTabularInline):
+        extra = 1
 
-    documents = GenericRelation(Document, related_query_name='your_model_name')
-
-
-Admin integration
------------------
-TODO
+    class MyModelAdmin(DocumentAdmin):
+        inlines = [MyDocumentInline]
 
 
 Settings
@@ -66,3 +61,5 @@ Define specific setting: ::
 
 If it's not set in current Django project settings, DocMgr will create a
 directory 'files_docmgr/' in your project root.
+
+Check if you've set MEDIA_ROOT to some reasonable value.
