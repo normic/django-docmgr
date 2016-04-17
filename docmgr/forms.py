@@ -12,3 +12,7 @@ class DocumentAdminForm(ModelForm):
         widgets = {
             'docfile': DocumentPreviewWidget(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(DocumentAdminForm, self).__init__(*args, **kwargs)
+        self.fields['docfile'].widget.form_instance = self

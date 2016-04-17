@@ -7,4 +7,3 @@ class DocMgrConfig(AppConfig):
 
     def ready(self):
         import docmgr.signals
-

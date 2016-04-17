@@ -3,11 +3,7 @@ import os
 
 from django.conf import settings
 
-UPLOAD_PATH = getattr(settings, 'DOCMGR_UPLOAD_PATH', 'files_docmgr/')
+UPLOAD_PATH = getattr(settings, 'DOCMGR_UPLOAD_PATH', settings.BASE_DIR + '/files_docmgr/')
 
-MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', settings.BASE_DIR + '/files/')
-
-
-if not os.path.exists(os.path.join(MEDIA_ROOT, UPLOAD_PATH)):
-    os.makedirs(os.path.join(MEDIA_ROOT, UPLOAD_PATH))
-
+if not os.path.exists(UPLOAD_PATH):
+    os.makedirs(UPLOAD_PATH)

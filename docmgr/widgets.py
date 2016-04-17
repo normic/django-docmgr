@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.forms.widgets import ClearableFileInput, Input, CheckboxInput
-from django.template.loader import render_to_string
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
@@ -33,7 +31,7 @@ class DocumentPreviewWidget(ClearableFileInput):
 
         if value:
             if value.name.endswith(('.jpg', '.gif', '.tif', '.png')):
-                img_src = settings.MEDIA_URL + conditional_escape(value)
+                img_src = '/docmgr/default-file/' + conditional_escape(self.form_instance.instance.pk)
             else:
                 img_src = '/static/images/_blank.png'
                 img_width = 'width="48px"'

@@ -1,5 +1,5 @@
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
-from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
 from braces.views import (
@@ -7,9 +7,27 @@ from braces.views import (
     AjaxResponseMixin,
     JSONResponseMixin
 )
+from django_downloadview import ObjectDownloadView, StorageDownloadView
 
 from .models import Document
 from .forms import DocumentAdminForm
+
+storage = FileSystemStorage()
+
+
+default_file_view = ObjectDownloadView.as_view(
+    model=Document,
+    file_field='docfile',
+    attachment=False
+)
+
+
+class DocumentThumbnailView(LoginRequiredMixin, StorageDownloadView):
+
+    def get_path(self):
+        return super(DocumentThumbnailView, self).get_path()
+
+dynamic_path = DocumentThumbnailView.as_view(storage=storage, attachment=False)
 
 
 class DocumentUploadView(LoginRequiredMixin,
