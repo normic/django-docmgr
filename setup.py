@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-docmgr',
-    version='0.2',
+    version='0.3',
     packages=find_packages(),
     include_package_data=True,
     license='GNU GPLv3',
@@ -19,6 +19,7 @@ setup(
     author='Michael Heumann',
     author_email='michael@mce-business.de',
     classifiers=[
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Framework :: Django :: 1.8',
@@ -26,10 +27,14 @@ setup(
         'License :: OSI Approved :: GNU GPLv3License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        # Replace these appropriately if you are stuck on Python 2.
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+    install_requires=[
+        'Django>=1.8',
+        'django-braces>=1.8.1',
+        'django-downloadview>=1.9',
+    ]
 )

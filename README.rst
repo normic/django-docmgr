@@ -6,9 +6,9 @@ own models.
 
 Features
 --------
-* Pluggable Document which can connect Documents to any model
+* Pluggable Document model which can connect Documents to any model
 * Templatetag for nice preview of a given (image)document
-* Provides DocuemntPreviewWidget which shows a preview of an image instead of
+* Provides DocumentPreviewWidget which shows a preview of an image instead of
   the normal filelink
 * When deleting or changing a referenced document, the file will be deleted as well
 * Provides a simple AdminModel
@@ -21,6 +21,7 @@ Requirements
 ############
 django >= 1.8
 django-braces >= 1.4
+django-downloadview >=1.9
 
 Prerequisites
 #############
@@ -46,7 +47,7 @@ Setup
     from docmgr.admin import DocumentAdmin, DocumentStackedInline, DocumentTabularInline
 
     class MyDocumentInline(DocumentTabularInline):
-        extra = 1
+        pass
 
     class MyModelAdmin(DocumentAdmin):
         inlines = [MyDocumentInline]
@@ -60,6 +61,6 @@ Define specific setting: ::
   DOCMGR_UPLOAD_PATH = '/home/my_file_path/'
 
 If it's not set in current Django project settings, DocMgr will create a
-directory 'files_docmgr/' in your project root.
+directory '/files_docmgr/' in your project root.
 
-Check if you've set MEDIA_ROOT to some reasonable value.
+The given path doesn't need to be in your MEDIA_ROOT.
