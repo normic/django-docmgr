@@ -12,9 +12,13 @@ class DocumentPreviewWidget(ClearableFileInput):
 
     # The "for" in the <label> allows to open the "open file" dialog by
     # clicking on the image, no js involved
+    # template_with_initial = (
+    #     '<label for=%(id_for_label)s> <img id="%(img_id)s" \
+    #         src="%(img_src)s" %(img_width)s> </label>'
+    #     '%(clear_template)s<br />%(input)s'
+    # )
     template_with_initial = (
-        '<label for=%(id_for_label)s> <img id="%(img_id)s" \
-            src="%(img_src)s" %(img_width)s> </label>'
+        '<a href="%(doc_src)s" target="_blank"><img id="%(img_id)s" src="%(img_src)s" %(img_width)s class="img-thumbnail document-preview"></a>'
         '%(clear_template)s<br />%(input)s'
     )
 
@@ -26,12 +30,14 @@ class DocumentPreviewWidget(ClearableFileInput):
 
     def render(self, name, value, attrs=None):
         # quick'n dirty hack to differentiate between filetypes by extension
-        img_src = 'dummy'
+        doc_src = ''
+        img_src = ''
         img_width = 'width="100px"'
 
         if value:
+            doc_src = '/docmgr/default-file/' + conditional_escape(self.form_instance.instance.pk)
             if value.name.endswith(('.jpg', '.gif', '.tif', '.png')):
-                img_src = '/docmgr/default-file/' + conditional_escape(self.form_instance.instance.pk)
+                img_src = doc_src
             else:
                 img_src = '/static/images/_blank.png'
                 img_width = 'width="48px"'
@@ -44,6 +50,7 @@ class DocumentPreviewWidget(ClearableFileInput):
             'clear_checkbox_label': self.clear_checkbox_label,
             'id_for_label': id_for_label,
             'img_id': id_for_label + '_img',
+            'doc_src': doc_src,
             'img_src': img_src,
             'img_width': img_width,
         }
