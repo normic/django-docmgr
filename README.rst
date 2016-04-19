@@ -39,9 +39,13 @@ Setup
         'docmgr',
     ]
 
-2. Run `python manage.py migrate` to create the docmgr models.
+2. Include the docmgr URLconf in your projects urls.py like this::
 
-3. Use docmgr in Admin with your own models::
+    (r'^docmgr/', include('docmgr.urls')),
+
+3. Run `python manage.py migrate` to create the docmgr models.
+
+4. Use docmgr in Admin with your own models::
 
     from docmgr.models import Document
     from docmgr.admin import DocumentAdmin, DocumentStackedInline, DocumentTabularInline
