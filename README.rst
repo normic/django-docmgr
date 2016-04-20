@@ -11,7 +11,8 @@ Features
 * Provides DocumentPreviewWidget which shows a preview of an image instead of
   the normal filelink
 * When deleting or changing a referenced document, the file will be deleted as well
-* Provides a simple AdminModel
+* Provides a simple AdminModel (not really usefull as you would have to enter contenttype by hand)
+* Provides predefined AdminInlines (with preview support)
 
 
 Quick start
@@ -39,9 +40,13 @@ Setup
         'docmgr',
     ]
 
-2. Run `python manage.py migrate` to create the docmgr models.
+2. Include the docmgr URLconf in your projects urls.py like this::
 
-3. Use docmgr in Admin with your own models::
+    (r'^docmgr/', include('docmgr.urls')),
+
+3. Run `python manage.py migrate` to create the docmgr models.
+
+4. Use docmgr in Admin with your own models::
 
     from docmgr.models import Document
     from docmgr.admin import DocumentAdmin, DocumentStackedInline, DocumentTabularInline
@@ -63,4 +68,4 @@ Define specific setting: ::
 If it's not set in current Django project settings, DocMgr will create a
 directory '/files_docmgr/' in your project root.
 
-The given path doesn't need to be in your MEDIA_ROOT.
+Hint: The given path doesn't need to be in your MEDIA_ROOT.
