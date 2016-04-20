@@ -17,17 +17,19 @@ class DocumentStackedInline(GenericStackedInline):
     form = DocumentAdminForm
     model = Document
     extra = 0
+    readonly_fields = ['filename', ]
 
 
 class DocumentTabularInline(GenericTabularInline):
     form = DocumentAdminForm
     model = Document
     extra = 0
+    readonly_fields = ['filename', ]
 
 
 class DocumentAdmin(admin.ModelAdmin):
     form = DocumentAdminForm
-    list_display = ['pk', 'docfile', 'description', 'content_type', 'object_id', 'preview_image']
+    list_display = ['pk', 'filepath', 'description', 'content_type', 'object_id', 'preview_image']
 
     def preview_image(self, obj):
         return format_html(
