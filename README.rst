@@ -20,14 +20,14 @@ Quick start
 
 Requirements
 ############
-django >= 1.8
-django-braces >= 1.4
-django-downloadview >=1.9
+| django >= 1.8
+| django-braces >= 1.4
+| django-downloadview >=1.9
 
 Prerequisites
 #############
 The contenttypes framework has to be installed and active. See `Django docs
-<https://docs.djangoproject.com/en/1.8/ref/contrib/contenttypes/>`_
+<https://docs.djangoproject.com/en/latest/ref/contrib/contenttypes/>`_
 
 
 Setup
