@@ -21,7 +21,7 @@ urlpatterns = [
     ),
     url(
         r'^default-file/(?P<pk>[a-zA-Z0-9_-]+)/$',
-        permission_required('change_document')(default_file_view),
+        permission_required('docmgr.change_document')(default_file_view),
         name='default_file'
     ),
 ]
