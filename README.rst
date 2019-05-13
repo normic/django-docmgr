@@ -20,14 +20,14 @@ Quick start
 
 Requirements
 ############
-| django >= 1.8
+| django >= 1.11
 | django-braces >= 1.4
 | django-downloadview >=1.9
 
 Prerequisites
 #############
 The contenttypes framework has to be installed and active. See `Django docs
-<https://docs.djangoproject.com/en/latest/ref/contrib/contenttypes/>`_
+<https://docs.djangoproject.com/en/1.11/ref/contrib/contenttypes/>`_
 
 
 Setup
@@ -43,6 +43,11 @@ Setup
 2. Include the docmgr URLconf in your projects urls.py like this::
 
     (r'^docmgr/', include('docmgr.urls')),
+
+    or in newer Django versions:
+
+    path('docmgr/', include('docmgr.urls')),
+
 
 3. Run `python manage.py migrate` to create the docmgr models.
 
