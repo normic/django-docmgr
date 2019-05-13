@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-docmgr',
-    version='0.3.2',
+    version='0.4',
     packages=find_packages(),
     include_package_data=True,
     license='GNU GPLv3',
@@ -17,12 +17,12 @@ setup(
     long_description=README,
     url='',
     author='Michael Heumann',
-    author_email='michael@mce-business.de',
+    author_email='michael@vilanet.de',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.11',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU GPLv3License',
         'Operating System :: OS Independent',
@@ -33,7 +33,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     install_requires=[
-        'Django>=1.8',
+        'Django>=1.11',
         'django-braces>=1.8.1',
         'django-downloadview>=1.9',
     ]
