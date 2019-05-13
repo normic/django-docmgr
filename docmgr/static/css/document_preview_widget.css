@@ -1,11 +1,5 @@
-/* Hide the input element for the image-preview widgets.
-The "open file" dialog will be triggered by a click on the image preview */
-input[type="file"].document-preview {
-    /* display: none; */
-    /* border: 1px solid red; */
-}
 
-img.document-preview {
+img.docmgr-preview {
     border: 1px solid gray;
     padding: 2px;
     margin: 2px;
