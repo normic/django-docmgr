@@ -15,4 +15,8 @@ class DocumentAdminForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(DocumentAdminForm, self).__init__(*args, **kwargs)
-        self.fields['docfile'].widget.form_instance = self
+
+        try:
+            self.fields['docfile'].widget.form_instance = self
+        except KeyError:
+            pass
