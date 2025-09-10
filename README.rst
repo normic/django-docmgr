@@ -11,7 +11,7 @@ Features
 * Provides DocumentPreviewWidget which shows a preview of an image instead of
   the normal filelink
 * When deleting or changing a referenced document, the file will be deleted as well
-* Provides a simple AdminModel (not really usefull as you would have to enter contenttype by hand)
+* Provides a simple AdminModel (not really useful as you would have to enter contenttype by hand)
 * Provides predefined AdminInlines (with preview support)
 
 
@@ -20,14 +20,14 @@ Quick start
 
 Requirements
 ############
-| django >= 1.11
+| django >= 4.2
 | django-braces >= 1.4
-| django-downloadview >=1.9
+| django-downloadview >=2.4.0
 
 Prerequisites
 #############
 The contenttypes framework has to be installed and active. See `Django docs
-<https://docs.djangoproject.com/en/1.11/ref/contrib/contenttypes/>`_
+<https://docs.djangoproject.com/en/5.2/ref/contrib/contenttypes/>`_
 
 
 Setup
@@ -41,10 +41,6 @@ Setup
     ]
 
 2. Include the docmgr URLconf in your projects urls.py like this::
-
-    (r'^docmgr/', include('docmgr.urls')),
-
-    or in newer Django versions:
 
     path('docmgr/', include('docmgr.urls')),
 
