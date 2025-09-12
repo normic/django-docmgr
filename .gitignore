@@ -33,3 +33,4 @@ Thumbs.db
 wsgi.py
 files/
 
+!/pyproject.toml

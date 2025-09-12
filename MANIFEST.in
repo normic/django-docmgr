@@ -1,5 +1,3 @@
-include LICENSE.txt
-include README.rst
 recursive-include docmgr/static *
 recursive-include docmgr/templates *
-recursive-include docs *
+
