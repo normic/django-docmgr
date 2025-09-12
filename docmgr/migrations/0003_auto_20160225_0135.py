@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
 import uuid
+
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -20,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='document',
             name='content_type',
-            field=models.ForeignKey(to='contenttypes.ContentType', null=True),
+            field=models.ForeignKey(to='contenttypes.ContentType', null=True, on_delete=models.SET_NULL),
         ),
         migrations.AddField(
             model_name='document',
