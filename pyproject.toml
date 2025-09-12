@@ -25,6 +25,7 @@ classifiers = [
 ]
 
 dependencies = [
+    "black>=25.1.0",
     "django>=4.2",
     "django-braces>=1.8.1",
     "django-downloadview>=2.4.0",
