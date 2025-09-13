@@ -1,5 +1,4 @@
 import os
-import time
 import uuid
 
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -10,20 +9,42 @@ from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from .app_settings import UPLOAD_PATH
+from .app_settings import UPLOAD_PATH, UPLOAD_STRUCTURE
 
 docstorage = FileSystemStorage(location=UPLOAD_PATH)
 
 
 def get_upload_path(instance, filename):
     """
-    cleans filename and returns the current year and
-    the cleaned filename as upload location
+    Cleans filename and returns the upload location according to configuration.
+    Default: <currentyear>/<slugifiedfilename>
+    Supported structures via settings.DOCMGR_UPLOAD_STRUCTURE:
+      - "year": YYYY/
+      - "year_month": YYYY/MM/
+      - "date" or "date_iso": YYYY-MM-DD/
     """
+    # Split filename into name and extension (if any)
     fname, dot, extension = filename.rpartition(".")
-    slugged_filename = slugify(fname)
-    slugged = "%s.%s" % (slugged_filename, extension)
-    return "{structure}/{file}".format(structure=time.strftime("%Y"), file=slugged)
+    base = fname if fname else filename  # when no dot present, rpartition returns ('', '', filename)
+    slugged_filename = slugify(base)
+    if extension:
+        slugged = f"{slugged_filename}.{extension}"
+    else:
+        slugged = slugged_filename
+
+    structure_key = str(UPLOAD_STRUCTURE).lower() if UPLOAD_STRUCTURE is not None else "year"
+    now = timezone.now()
+
+    if structure_key == "year_month":
+        structure = now.strftime("%Y/%m")
+    elif structure_key in ("date", "date_iso"):
+        # ISO 8601 date format
+        structure = now.strftime("%Y-%m-%d")
+    else:
+        # default and fallback
+        structure = now.strftime("%Y")
+
+    return f"{structure}/{slugged}"
 
 
 class Document(models.Model):
