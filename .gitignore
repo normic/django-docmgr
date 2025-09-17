@@ -32,5 +32,6 @@ Thumbs.db
 .pylintrc
 wsgi.py
 files/
+.idea/
 
 !/pyproject.toml
