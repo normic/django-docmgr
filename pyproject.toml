@@ -4,6 +4,10 @@ version = "0.5.0"
 description = "A pluggable Django app to reference documents (files) in models."
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [
+    {name = "Michael Heumann", email="michael@vilanet.de"},
+]
+
 
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -25,8 +29,12 @@ classifiers = [
 ]
 
 dependencies = [
-    "black>=25.1.0",
     "django>=4.2",
     "django-braces>=1.8.1",
     "django-downloadview>=2.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
 ]
