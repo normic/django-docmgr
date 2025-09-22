@@ -1,19 +1,18 @@
-from django.core.files.storage import FileSystemStorage
-from django.shortcuts import render
-from django.views.generic import View
-
 from braces.views import (
     LoginRequiredMixin,
     AjaxResponseMixin,
     JSONResponseMixin
 )
+from django.core.files.storage import FileSystemStorage
+from django.shortcuts import render
+from django.views.generic import View
 from django_downloadview import ObjectDownloadView, StorageDownloadView
 
-from .models import Document
+from .app_settings import UPLOAD_PATH
 from .forms import DocumentAdminForm
+from .models import Document
 
-storage = FileSystemStorage()
-
+storage = FileSystemStorage(location=UPLOAD_PATH)
 
 default_file_view = ObjectDownloadView.as_view(
     model=Document,
@@ -27,6 +26,7 @@ class DocumentThumbnailView(LoginRequiredMixin, StorageDownloadView):
     def get_path(self):
         return super(DocumentThumbnailView, self).get_path()
 
+
 dynamic_path = DocumentThumbnailView.as_view(storage=storage, attachment=False)
 
 
@@ -39,20 +39,7 @@ class DocumentUploadView(LoginRequiredMixin,
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
 
-    """
-    def dispatch(self, *args, **kwargs):
-        return super(DocumentUploadView, self).dispatch(*args, **kwargs)
-    """
-
     def post_ajax(self, request, *args, **kwargs):
-        """
-        try:
-            folder = Folder.objects.get(pk=kwargs.get('pk'))
-        except Folder.DoesNotExist:
-            error_dict = {'message': 'Requested Folder not found.'}
-            return self.render_json_response(error_dict, status=404)
-        """
-
         uploaded_file = request.FILES['file']
 
         Document.objects.create(

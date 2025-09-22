@@ -89,7 +89,7 @@ class DocumentSerializer(serializers.ModelSerializer):
             # Ensure file upload is required on create, optional on update
             "docfile": {"required": True, "allow_null": False},
             "description": {"required": False, "allow_blank": True},
-            "object_id": {"required": False, "allow_null": True},
+            "object_id": {"required": False, "allow_null": True, "allow_blank": True},
         }
 
     def get_filename(self, obj: Document) -> str:
@@ -187,11 +187,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
             else:
                 qs = qs.none()
         if obj_id:
-            try:
-                obj_id_int = int(obj_id)
-                qs = qs.filter(object_id=obj_id_int)
-            except ValueError:
-                qs = qs.none()
+            # Treat object_id as string to support both integer and UUID primary keys
+            qs = qs.filter(object_id=str(obj_id))
         return qs
 
     @decorators.action(detail=True, methods=["get"], url_path="download")

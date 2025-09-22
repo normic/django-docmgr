@@ -48,6 +48,9 @@ def get_upload_path(instance, filename):
 
 
 class Document(models.Model):
+    # Explicit default manager to satisfy static analyzers (e.g., PyCharm, pylint)
+    objects = models.Manager()
+
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     docfile = models.FileField(
         _("Document File"),
@@ -60,7 +63,7 @@ class Document(models.Model):
         blank=True,
     )
     content_type = models.ForeignKey(ContentType, null=True, on_delete=models.SET_NULL)
-    object_id = models.PositiveIntegerField(null=True)
+    object_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     content_object = GenericForeignKey("content_type", "object_id")
 
     uploaded_at = models.DateTimeField(default=timezone.now, editable=False)
