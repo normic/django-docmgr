@@ -32,6 +32,8 @@ dependencies = [
     "django>=4.2",
     "django-braces>=1.8.1",
     "django-downloadview>=2.4.0",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
 ]
 
 [project.optional-dependencies]
@@ -43,6 +45,8 @@ drf = [
 [dependency-groups]
 dev = [
     "black>=25.1.0",
+    "pytest",
+    "pytest-cov",
 ]
 
 [build-system]
