@@ -1,6 +1,6 @@
 [project]
 name = "django-docmgr"
-version = "0.6.1"
+version = "0.6.2"
 description = "A pluggable Django app to reference documents (files) in models."
 keywords = ["django", "documents", "files", "contenttypes", "drf", "storage"]
 readme = "README.md"
@@ -50,11 +50,14 @@ dev = [
 ]
 
 [build-system]
-requires = ["setuptools>=62", "wheel"]
+requires = ["setuptools>=77.0.3", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project.urls]
 Homepage = "https://github.com/normic/django-docmgr"
+Repository = "https://github.com/normic/django-docmgr.git"
+Issues = "https://github.com/normic/django-docmgr/issues"
+Changelog = "https://github.com/normic/django-docmgr/blob/master/CHANGELOG.md"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
