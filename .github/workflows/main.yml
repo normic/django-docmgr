@@ -25,7 +25,7 @@ jobs:
         run: uv venv
   
       - name: Install dependencies
-        run: uv pip install -e . --dev
+        run: uv pip install -e . --group dev
 
       - name: Run tests
         run: uv run pytest --cov=src --cov-branch --cov-report=xml
