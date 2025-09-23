@@ -58,3 +58,27 @@ if not settings.configured:
 import django  # noqa: E402
 
 django.setup()
+
+
+# Ensure Django test environment + test DBs are created for pytest runs
+import pytest  # noqa: E402
+from django.test.utils import (  # noqa: E402
+    setup_test_environment,
+    teardown_test_environment,
+    setup_databases,
+    teardown_databases,
+)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _django_test_environment_and_db():
+    # Prepare Django's testing environment (e.g., clears caches, sets DEBUG flags)
+    setup_test_environment()
+    # Create test databases (runs migrations)
+    db_cfg = setup_databases(verbosity=0, interactive=False, keepdb=False)
+    try:
+        yield
+    finally:
+        # Drop test databases and restore environment
+        teardown_databases(db_cfg, verbosity=0)
+        teardown_test_environment()
