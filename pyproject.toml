@@ -1,6 +1,6 @@
 [project]
 name = "django-docmgr"
-version = "0.6.0"
+version = "0.6.1"
 description = "A pluggable Django app to reference documents (files) in models."
 keywords = ["django", "documents", "files", "contenttypes", "drf", "storage"]
 readme = "README.md"

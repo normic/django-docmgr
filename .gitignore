@@ -11,6 +11,9 @@
 *.egg-info
 /dist
 /build
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Python precompiles
 *.pyc
