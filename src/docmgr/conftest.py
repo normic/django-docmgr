@@ -1,4 +1,4 @@
-# ... existing code ...
+import os
 from pathlib import Path
 
 from django.conf import settings
@@ -54,6 +54,9 @@ if not settings.configured:
         # Ensure app_settings chooses a writable path for test files
         DOCMGR_UPLOAD_PATH=str(BASE_DIR / "files_docmgr"),
     )
+
+# Create upload directory proactively for tests
+os.makedirs(settings.DOCMGR_UPLOAD_PATH, exist_ok=True)
 
 import django  # noqa: E402
 
