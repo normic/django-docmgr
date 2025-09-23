@@ -55,3 +55,9 @@ build-backend = "setuptools.build_meta"
 
 [project.urls]
 Homepage = "https://github.com/normic/django-docmgr"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+testpaths = ["src/docmgr/tests"]
+addopts = "-ra --maxfail=1"
