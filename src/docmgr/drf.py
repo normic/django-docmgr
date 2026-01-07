@@ -11,7 +11,7 @@ see README.md for detailed examples.
 """
 from __future__ import annotations
 
-from typing import Iterable, List, Optional, Sequence, Type
+from typing import List, Optional, Sequence, Type
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -30,6 +30,7 @@ except Exception as exc:  # pragma: no cover - only hit when DRF missing
     ) from exc
 
 from .models import Document
+from .permissions import get_object_permission_handler
 
 
 class ContentTypeField(serializers.Field):
@@ -111,6 +112,20 @@ class DefaultDocumentPermission(permissions.DjangoModelPermissions):
             return False
         return super().has_permission(request, view)
 
+    def has_object_permission(self, request, view, obj) -> bool:
+        # Check standard model permissions first
+        if not super().has_object_permission(request, view, obj):
+            return False
+
+        # Check pluggable object-level permissions
+        handler = get_object_permission_handler()
+        if handler:
+            # Map DRF actions to standard names if needed, or just pass view.action
+            action = getattr(view, "action", "view")
+            return handler.has_object_permission(request.user, obj, action)
+
+        return True
+
 
 def _resolve_permission_classes() -> Sequence[Type[permissions.BasePermission]]:
     """
@@ -121,7 +136,7 @@ def _resolve_permission_classes() -> Sequence[Type[permissions.BasePermission]]:
         settings, "DOCMGR_DRF_PERMISSION_CLASSES", None
     )
     if not paths:
-        return (permissions.IsAuthenticated, permissions.DjangoModelPermissions)
+        return (permissions.IsAuthenticated, DefaultDocumentPermission)
     classes: List[Type[permissions.BasePermission]] = []
     for dotted in paths:
         cls = import_string(dotted)
@@ -166,6 +181,12 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):  # type: ignore[override]
         qs = super().get_queryset()
+
+        # Pluggable object-level permission filtering
+        handler = get_object_permission_handler()
+        if handler and hasattr(handler, "filter_queryset"):
+            qs = handler.filter_queryset(self.request.user, qs)
+
         # Optional filtering by related object
         ctype = self.request.query_params.get("content_type")
         obj_id = self.request.query_params.get("object_id")

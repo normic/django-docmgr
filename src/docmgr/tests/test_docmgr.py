@@ -1,15 +1,20 @@
 import os
-import io
 from datetime import datetime
 from unittest.mock import patch
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.template.defaultfilters import slugify
 from django.test import RequestFactory, TestCase
-from django.contrib.contenttypes.models import ContentType
-from django.core.files.uploadedfile import SimpleUploadedFile
 
-from docmgr.models import get_upload_path, Document
+try:
+    from rest_framework import status
+    from rest_framework.test import APIRequestFactory, force_authenticate
+    from docmgr.drf import DocumentViewSet
+    DRF_INSTALLED = True
+except ImportError:
+    DRF_INSTALLED = False
+
+from docmgr.models import get_upload_path
 from docmgr import views as doc_views
 
 

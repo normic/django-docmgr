@@ -22,6 +22,7 @@ UPLOAD_STRUCTURE = getattr(settings, "DOCMGR_UPLOAD_STRUCTURE", "year")
 # - DOCMGR_DRF_PERMISSION_CLASSES: list of dotted paths to DRF permission classes.
 #   Defaults to ["rest_framework.permissions.IsAuthenticated", "rest_framework.permissions.DjangoModelPermissions"].
 # - DOCMGR_DRF_THROTTLE_SCOPE: scope name to use with ScopedRateThrottle (e.g., "docmgr").
+# - DOCMGR_OBJECT_PERMISSION_HANDLER: dotted path to a function or class that checks object-level permissions.
 DOCMGR_DRF_PERMISSION_CLASSES = getattr(
     settings,
     "DOCMGR_DRF_PERMISSION_CLASSES",
@@ -31,6 +32,10 @@ DOCMGR_DRF_PERMISSION_CLASSES = getattr(
     ],
 )
 DOCMGR_DRF_THROTTLE_SCOPE = getattr(settings, "DOCMGR_DRF_THROTTLE_SCOPE", "docmgr")
+
+DOCMGR_OBJECT_PERMISSION_HANDLER = getattr(
+    settings, "DOCMGR_OBJECT_PERMISSION_HANDLER", None
+)
 
 if not os.path.exists(UPLOAD_PATH):
     os.makedirs(UPLOAD_PATH)
