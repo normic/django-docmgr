@@ -93,10 +93,12 @@ class DocumentSerializer(serializers.ModelSerializer):
             "object_id": {"required": False, "allow_null": True, "allow_blank": True},
         }
 
-    def get_filename(self, obj: Document) -> str:
+    @staticmethod
+    def get_filename(obj: Document) -> str:
         return obj.filename
 
-    def get_filepath(self, obj: Document) -> str:
+    @staticmethod
+    def get_filepath(obj: Document) -> str:
         return obj.filepath
 
 
@@ -136,7 +138,7 @@ def _resolve_permission_classes() -> Sequence[Type[permissions.BasePermission]]:
         settings, "DOCMGR_DRF_PERMISSION_CLASSES", None
     )
     if not paths:
-        return (permissions.IsAuthenticated, DefaultDocumentPermission)
+        return permissions.IsAuthenticated, DefaultDocumentPermission
     classes: List[Type[permissions.BasePermission]] = []
     for dotted in paths:
         cls = import_string(dotted)
