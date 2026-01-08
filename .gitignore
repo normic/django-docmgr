@@ -38,3 +38,4 @@ files/
 .idea/
 
 !/pyproject.toml
+!/files_docmgr/
