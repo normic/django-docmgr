@@ -1,5 +1,10 @@
 # Changelog
+## [0.7.0] - 2026-01-08
 
+### Added
+- Pluggable object-level permission system for documents.
+- `DOCMGR_OBJECT_PERMISSION_HANDLER` setting to restrict document access based on referenced objects.
+- Support for custom queryset filtering via the pluggable permission handler.
 
 ## [0.6.1] - 2025-09-23
 

@@ -78,6 +78,9 @@ secure by default and simple to wire into existing routers.
 - DOCMGR_DRF_THROTTLE_SCOPE: str
   Defaults to "docmgr". Used with DRF's ScopedRateThrottle.
 
+- DOCMGR_OBJECT_PERMISSION_HANDLER: str
+  Optional. Dotted path to a class or function that implements object-level permissions based on the document's referenced object.
+
 
 ## Quick start (DRF)
 1) Install DRF if you haven't:
@@ -149,6 +152,63 @@ DOCMGR_DRF_PERMISSION_CLASSES = [
   # Example: "yourapp.permissions.OwnerOrReadOnly"
 ]
 ```
+
+### Pluggable Object-Level Permissions
+You can restrict access to a document based on the permissions of the object it references (`content_type` and `object_id`). This is useful when documents should inherit the access rights of their "parent" object.
+
+#### Option A: Class-based Handler
+Create a class that implements the `ObjectPermissionHandler` protocol.
+
+```python
+# your_app/permissions.py
+from typing import Any, Union
+from django.contrib.auth.models import AnonymousUser, User
+from django.db.models import QuerySet
+from docmgr.models import Document
+
+class MyObjectPermissionHandler:
+    def has_object_permission(self, request, view, obj: Document) -> bool:
+        user = request.user
+        action = 'view' if request.method in SAFE_METHODS else 'change'
+        
+        # Get the referenced object
+        target = obj.object_id
+        if not target:
+            return False  # Or True, depending on your policy
+        
+        # Implement your logic (e.g., check if user can view the target)
+        if action == "view":
+            return user.has_perm("your_app.view_target", target)
+        return user.has_perm("your_app.change_target", target)
+
+```
+
+#### Option B: Function-based Handler
+You can also use a simple function if you don't need `filter_queryset` or want a more lightweight approach. Note that functions only support the `has_object_permission` check; if you need custom queryset filtering, you must use a class.
+
+```python
+# your_app/permissions.py
+from django.contrib.auth.models import User
+from docmgr.models import Document
+
+def my_permission_check(user: User, obj: Document, action: str) -> bool:
+    target = obj.content_object
+    if not target:
+        return True
+    return user.has_perm(f"your_app.{action}_target", target)
+```
+
+#### Configuration
+Configure the handler in your `settings.py`:
+```python
+# For class-based:
+DOCMGR_OBJECT_PERMISSION_HANDLER = "your_app.permissions.MyObjectPermissionHandler"
+
+# For function-based:
+# DOCMGR_OBJECT_PERMISSION_HANDLER = "your_app.permissions.my_permission_check"
+```
+
+The `DefaultDocumentPermission` will automatically call the handler after standard model permission checks. `DocumentViewSet.get_queryset` will also call `filter_queryset` (if using a class-based handler) to ensure users only see documents they are allowed to access.
 
 #### Enabling throttling (optional)
 ```

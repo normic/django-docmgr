@@ -1,6 +1,6 @@
 [project]
 name = "django-docmgr"
-version = "0.6.2"
+version = "0.7.0"
 description = "A pluggable Django app to reference documents (files) in models."
 keywords = ["django", "documents", "files", "contenttypes", "drf", "storage"]
 readme = "README.md"
@@ -32,6 +32,7 @@ dependencies = [
     "django>=4.2",
     "django-braces>=1.8.1",
     "django-downloadview>=2.4.0",
+    "djangorestframework-stubs>=3.16.6",
     "pytest>=8.4.2",
     "pytest-cov>=7.0.0",
 ]
